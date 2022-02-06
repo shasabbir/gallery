@@ -12,8 +12,8 @@ include "func.php";
 <div class="images">
 
 </div>
-<img class="phide phidem"  style="width:1px;" src="./index/hide.bmp" onclick="phide()">
-<img class="phide phideb reload" style="width:1px;" src="./index/reload.bmp" onclick="reload()">
+<img class="phide phidem"  style="opacity: .1;width:1px;" src="./index/hide.bmp" onclick="phide()">
+<img class="phide phideb reload" style="opacity: .1;width:1px;" src="./index/reload.bmp" onclick="reload()">
 <div id="snackbar"></div>
 <div id="image-viewer" style="display: none;">
 <span class="right arrow">▶</span><span class="rightl arrow">▶</span>
