@@ -1,11 +1,8 @@
 console.log(DATA.length + " numbers of data found");
-//var $ = window.jQuery;
 var now;
 var err = ['499 Client Closed Request', '444 No Response', '405 Method Not Allowed', '412 Precondition Failed', '421 Misdirected Request', '424 Failed Dependency', '426 Upgrade Required', '431 Request Header Fields Too Large', '501  Not Implemented', '416 Range Not Satisfiable', '599 Network Connect Timeout Error', '530 Site is frozen', '498 Invalid Token', '419 Page Expired', '505 HTTP Version Not Supported', '504 Gateway Timeout', '503 Service Unavailable', '502 Bad Gateway', '500 Internal Server Error', '429 Too Many Requests', '428 Precondition Required', '421 Misdirected Request', '400 Bad Request', '424 Failed Dependency', '401 Unauthorized', '403 Forbidden', '404 Not Found', '511 Network Authentication Required', '417 Expectation Failed', '408 Request Timeout', '415 Unsupported Media Type'];
 var a;
-var index = 1;
 var big = 0;
-var phn = false;
 var rnum;
 var phide1 = 0;
 var phide2 = 0;
@@ -16,11 +13,13 @@ var plays = 0;
 var playls = 0;
 var aaudio = 0;
 var phone = false;
+if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+        phone=true;console.log("phone");
+    }
 hider();
 cmobile();
 var len = DATA.length; //getting total array
 loader(DATA);
-//loader(DATA);
 
 function loader(arr) { //image loader function
     var div = document.querySelector("body > div.images");
@@ -50,7 +49,7 @@ function jq() {
             $('#image-viewer').show();
             $('body').addClass('stop-scrolling');
             big = 1;
-    if(window.innerWidth > 1100){showFoo(2000);}
+    if(!phone){showFoo(2000);}
             now = parseInt(childnum(this));
             var tnum = parseInt($(this).attr("num"));
             var imglr = new Image();
@@ -59,7 +58,7 @@ function jq() {
             imgll.src = DATA[tnum - 1].url;
         });
         $("#full-image").dblclick(function () { //double click full screen
-            if (big == 1 && window.innerWidth > 1100) {
+            if (big == 1 && !phone) {
                 fullscreen();
             }
         });
@@ -89,7 +88,7 @@ function jq() {
         $("#image-viewer .leftl").unbind('click').bind('click', function () { //left
             leftl();
         });
-        if (window.innerWidth > 1100) {
+        if (!phone) {
             $("#image-viewer").unbind('click').bind('click', function (e) { //dark place click close
                 if (e.target !== this) {
                     return;
@@ -127,8 +126,7 @@ if (localStorage.getItem('hide') == '0') {
 }
 
 function cmobile() {
-    if (window.innerWidth <= 1100) { //for small less image load
-        phone = true;
+    if (phone) { //for small less image load
         if (localStorage.getItem('hide') === null) { //set hide if not set
             localStorage.setItem('hide', 0);
         }
@@ -189,7 +187,7 @@ function cmobile() {
         });
     }
 }
-if(window.innerWidth > 1100){addEventListener("keydown", function (ev) {
+if(!phone){addEventListener("keydown", function (ev) {
     if(ev.keyCode === 99 || ev.keyCode === 34){
             rightl();
     } else if(ev.keyCode === 97 || ev.keyCode === 35){
@@ -435,7 +433,7 @@ function playl() {
     }
 }
 
-if(window.innerWidth > 1100){var audio = new Audio('./index/aaa.mp3');
+if(!phone){var audio = new Audio('./index/aaa.mp3');
 audio.volume = .1;
 
 $(window).blur(function () { // windows change
@@ -562,10 +560,7 @@ function shortcut(){
 }
 /* ---------------------------Hide------------------------ */
 function hider() {
-    if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
-        console.log('Its a phone so no hiding');
-        document.title = 'Gallery';
-    } else {
+     if(!phone) {
         if (localStorage.getItem('hide1') != '0' && localStorage.getItem('hide') != '0') {
             document.title = 'Gallery';
             $('img.reload').ready(function () {
@@ -583,7 +578,6 @@ function hider() {
             iframe.style = "position:fixed; top:0; left:0; bottom:0; right:0; width:100%; height:100%; border:none; margin:0; padding:0; overflow:hidden; z-index:999999;"
             iframe.src = 'https://www.aiub.edu/';
             document.body.appendChild(iframe);
-            index = 0;
         }
         if (localStorage.getItem('hide') === null) { //set hide if not set
             localStorage.setItem('hide', 0);
@@ -772,12 +766,12 @@ function showFoo(time) {//cursor hide
   clearTimeout(idleTimer);
   if (idleState == true) {
     document.querySelector("#full-image").style.cursor = 'auto';
-    if(window.innerWidth > 1100){$(".rightl,.leftl,.playl").css("display", "block");}
+    if(!phone){$(".rightl,.leftl,.playl").css("opacity", "0.5");}
   }
   idleState = false;
   idleTimer = setTimeout(function() {
     document.querySelector("#full-image").style.cursor = 'none';
-    $(".rightl,.leftl,.playl").fadeOut(800);
+    if(!phone){$(".rightl,.leftl,.playl").css("opacity", "0.1");}
     idleState = true;
   }, time);
 }
