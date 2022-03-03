@@ -80,26 +80,22 @@ if(isset($_POST['refresh'])) {
 $cd=1;
   }
   if(isset($_POST['edit'])) {
-echo exec('mspaint.exe "D:\ProgramCache\CodeBlocks\MinGW\bin\nn\pics'.$_POST['edit'].'"');
+echo exec('mspaint.exe "/*directory of main folder*/'.$_POST['edit'].'"');
   }
   if(isset($cd)) {
     $path = './';
 $array = array();
-$arrayf = array();$fi=0;
 
 $i=0;
 $objects = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($path), RecursiveIteratorIterator::SELF_FIRST);
 foreach($objects as $name => $object){
     if(str_contains(strtolower($name), '.jpg')||str_contains(strtolower($name), '.gif')||str_contains(strtolower($name), '.tiff')||str_contains(strtolower($name), '.jpeg')||str_contains(strtolower($name), '.jfif')||str_contains(strtolower($name), '.png')){
-        if(str_contains($name, '\\for\\')){
-            $arrayf[] = array('id' => $fi, 'url' => $name);$fi=$fi+1;
-        }
         $array[] = array('id' => $i, 'url' => $name);$i=$i+1;
     //echo "$name\n";$i=$i+1;
     }
 }
 $fp = fopen('dir.js', 'w');
-fwrite($fp, 'DATA='.json_encode($array).';'.PHP_EOL .'DATAf='.json_encode($arrayf)).';';
+fwrite($fp, 'DATA='.json_encode($array).';');
 fclose($fp);unset($cd);
   }
   ?>
